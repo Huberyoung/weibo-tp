@@ -9,17 +9,10 @@
     <link href="/static/static_pages.css" rel="stylesheet">
 </head>
 <body>
-<div class="nav navbar-inverse" role="navigation">
-    <div class="navbar-header">
-        <a href="#" class="navbar-brand">微博App</a>
-    </div>
-    <ul class="nav navbar-nav pull-right">
-        <li class="navbar-item"><a class="navbar-link" href="#">帮助</a></li>
-        <li class="navbar-item"><a class="navbar-link" href="#">登录</a></li>
-    </ul>
-</div>
+{include file="layouts/_header"}
 <div class="container">
     {block name="body"}{/block}
+    {include file="layouts/_footer"}
 </div>
 <script src="/static/jquery-3.3.1/jquery-3.3.1.min.js"></script>
 <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>

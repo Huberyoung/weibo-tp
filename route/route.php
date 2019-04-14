@@ -13,3 +13,7 @@ Route::group('/', function () {
     Route::get('help', 'help');
     Route::get('about', 'about');
 })->prefix('index/staticPages/');
+
+Route::group('/',function() {
+    Route::get('create','create');
+})->prefix('index/users/');

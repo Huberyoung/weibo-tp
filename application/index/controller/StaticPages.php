@@ -24,12 +24,12 @@ class StaticPages extends Controller
      */
     public function aboutOp()
     {
-        return "about";
+        return $this->fetch();
     }
 
     public function helpOp()
     {
-        return "help";
+        return $this->fetch();
     }
 
     /**

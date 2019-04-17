@@ -27,16 +27,19 @@ class CreateUsersTable extends Migrator
      * with the Table class.
      */
     public function up(){
-        $table = $this->table('users');
-        $table->addColumn('username' , 'string' , ['limit' => 30])
-            ->addColumn('passwork' , 'string' , ['limit' => 32])
-            ->addColumn('email' , 'string' , ['limit' => 25])
-            ->addColumn('lastlogin_ip' , 'string' , ['limit' => 15])
-            ->addTimestamps('create_time' , 'lastlogin_time')
-            ->addColumn('status' , 'integer' , ['limit' => 1 , 'default' => 1])
-            ->setId('user_id')
-            ->save();
 
+        $table = $this->table('users');
+        $table
+            ->addColumn('name', 'string',array('limit' => 15,'comment'=>'用户名，登陆使用'))
+            ->addColumn('email', 'string',array('comment'=>'用户邮箱'))
+            ->addColumn('email_verified_at', 'datetime',array('comment'=>'是否通过email验证','null'=>true))
+            ->addColumn('password', 'string',array('limit' => 32,'default'=>md5('123456'),'comment'=>'用户密码'))
+            ->addColumn('rememberToken', 'boolean',array('limit' => 1,'default'=>0,'comment'=>'登陆状态'))
+            ->addColumn('create_at', 'datetime',array('comment'=>'创建时间'))
+            ->addColumn('update_at', 'datetime',array('comment'=>'更新时间'))
+            ->addIndex(array('email'), array('unique' => true))
+            ->setId('id')
+            ->create();
     }
 
     /**

@@ -11,9 +11,10 @@
 <body>
 {include file="layouts/_header"}
 <div class="container">
+    {include file="layouts/_messages" /}
     {block name="body"}{/block}
-    {include file="layouts/_footer"}
 </div>
+{include file="layouts/_footer"}
 <script src="/static/jquery-3.3.1/jquery-3.3.1.min.js"></script>
 <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </body>

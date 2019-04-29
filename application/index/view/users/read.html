@@ -1,0 +1,20 @@
+{extend name='layouts/default'}
+
+{block name='title'}注册{/block}
+
+{block name='body'}
+<div class="row">
+    <div class="offset-md-2 col-md-8">
+        <div class="col-md-12">
+            <div class="offset-md-2 col-md-8">
+                <section id="user_info">
+                    <a href="{:url('/users/'.$user->id)}">
+                        <img src="{$user->gravatar}" alt="{$user->name}" class="gravatar"/>
+                    </a>
+                    <h1>{$user->name}</h1>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

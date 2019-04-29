@@ -14,6 +14,4 @@ Route::group('/', function () {
     Route::get('about', 'about');
 })->prefix('index/staticPages/');
 
-Route::group('/',function() {
-    Route::get('create','create');
-})->prefix('index/users/');
+Route::resource('users','index/users');

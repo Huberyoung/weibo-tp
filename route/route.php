@@ -15,3 +15,9 @@ Route::group('/', function () {
 })->prefix('index/staticPages/');
 
 Route::resource('users','index/users');
+
+Route::group('/', function (){
+    Route::get('login','create');
+    Route::post('save','save');
+    Route::delete('logout','delete');
+})->prefix('index/Sessions/');

@@ -4,15 +4,15 @@
 
 {block name='body'}
 <div class="row">
-    <div class="offset-md-2 col-md-8">
+    <div class="col-md-offset-2 col-md-8">
         <div class="col-md-12">
-            <div class="offset-md-2 col-md-8">
-                <section id="user_info">
-                    <a href="{:url('/users/'.$user->id)}">
-                        <img src="{$user->gravatar}" alt="{$user->name}" class="gravatar"/>
-                    </a>
-                    <h1>{$user->name}</h1>
-                </section>
+            <div class="col-md-offset-4 col-md-4">
+                <a href="{:url('/users/'.$user->id)}">
+                    <img src="{$user->gravatar}" alt="{$user->name}" class="gravatar"/>
+                </a>
+            </div>
+            <div class="col-md-offset-3 col-md-4">
+                <h1>{$user->name}</h1>
             </div>
         </div>
     </div>

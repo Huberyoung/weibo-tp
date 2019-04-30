@@ -1,12 +1,11 @@
 <?php
 
-namespace app\Index\controller;
+namespace app\index\controller;
 
-use app\common\model\Users as UserModel;
 use think\Controller;
 use think\Request;
 
-class Users extends Controller
+class Sessions extends Controller
 {
     protected $batchValidate = true;
     /**
@@ -16,7 +15,7 @@ class Users extends Controller
      */
     public function indexOp()
     {
-        phpinfo();
+        //
     }
 
     /**
@@ -27,13 +26,11 @@ class Users extends Controller
     public function createOp()
     {
         $old = [
-            'name'                  => '',
-            'email'                 => '',
-            'password'              => '',
-            'password_confirmation' => ''
+            'email'    => '',
+            'password' => '',
         ];
         $this->assign('old',$old);
-        return $this->fetch();
+       return $this->fetch();
     }
 
     /**
@@ -44,21 +41,21 @@ class Users extends Controller
      */
     public function saveOp(Request $request)
     {
-        if($request->isPost()) {
-            $data = $request->param();
-            $errors = $this->validate($data,'app\index\validate\Users');
-            if(($errors !== true) && (is_array($errors))){
-                $this->assign('errors',$errors);
-                $this->assign('old',$data);
+        if ($request->isPost()) {
+           $data   = $request->param();
+           $errors = $this->validate($data,'app\index\validate\Sessions');
+            if (($errors !== true) && (is_array($errors))) {
+                $this->assign('errors', $errors);
+                $this->assign('old', $data);
                 return view('create');
             } else {
-                $user = new UserModel([
-                    'name'     => $request->param('name'),
-                    'email'    => $request->param('email'),
-                    'password' => md5($request->param('password')),
-                ]);
-                $user->save();
-                return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
+//                $user = new UserModel([
+//                    'name'     => $request->param('name'),
+//                    'email'    => $request->param('email'),
+//                    'password' => md5($request->param('password')),
+//                ]);
+//                $user->save();
+//                return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
             }
         }
     }
@@ -71,14 +68,7 @@ class Users extends Controller
      */
     public function readOp($id)
     {
-
-        $user = UserModel::get($id);
-
-        $user->gravatar = $this->gravatar($user);
-
-        $this->assign('user', $user);
-
-        return $this->fetch();
+        //
     }
 
     /**
@@ -113,11 +103,5 @@ class Users extends Controller
     public function deleteOp($id)
     {
         //
-    }
-
-    public function gravatar($user, $size = '100')
-    {
-        $hash = md5(strtolower(trim($user->email)));
-        return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
 }

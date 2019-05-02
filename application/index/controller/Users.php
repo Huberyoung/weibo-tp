@@ -5,7 +5,9 @@ namespace app\Index\controller;
 use app\common\model\Users as UserModel;
 use think\Controller;
 use think\facade\Session;
+use think\facade\Cookie;
 use think\Request;
+
 
 class Users extends Controller
 {
@@ -73,7 +75,6 @@ class Users extends Controller
      */
     public function readOp($id)
     {
-
         $user = UserModel::get($id);
 
         $user->gravatar = $this->gravatar($user);

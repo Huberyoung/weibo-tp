@@ -6,6 +6,7 @@ use think\Controller;
 use think\Request;
 use app\common\model\Users;
 use think\facade\Session;
+use think\facade\Cookie;
 
 class Sessions extends Controller
 {
@@ -62,6 +63,9 @@ class Sessions extends Controller
                     Session::flash('old',$data);
                     return redirect('create');
                 } else {
+                    if (!empty($data['remember'])){
+                        $this->rememberMe($user);
+                    }
                     Session::set('user',$user);
                     Session::flash('success','欢迎回来！');
                     return redirect('users/read',[$user->id]);
@@ -83,4 +87,12 @@ class Sessions extends Controller
         return redirect('create');
     }
 
+    public function rememberMe($user)
+    {
+        $rememberToken = md5($user['name']).md5($user['email']);
+        $user = Users::get($user->id);
+        $user->rememberToken = $rememberToken;
+        $user->save();
+        Cookie::set('auth',$user->id.':'.$rememberToken,30*24*60*60);
+    }
 }

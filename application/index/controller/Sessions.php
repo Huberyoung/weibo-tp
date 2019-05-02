@@ -62,7 +62,7 @@ class Sessions extends Controller
                     Session::flash('old',$data);
                     return redirect('create');
                 } else {
-                    
+                    Session::set('user',$user);
                     Session::flash('success','欢迎回来！');
                     return redirect('users/read',[$user->id]);
                 }
@@ -114,4 +114,5 @@ class Sessions extends Controller
     {
         //
     }
+
 }

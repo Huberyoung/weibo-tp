@@ -71,48 +71,16 @@ class Sessions extends Controller
     }
 
     /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function readOp($id)
-    {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function editOp($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function updateOp(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * 删除指定资源
      *
      * @param  int  $id
      * @return \think\Response
      */
-    public function deleteOp($id)
+    public function deleteOp()
     {
-        //
+        Session::delete('user');
+        Session::flash('success','您已成功退出！');
+        return redirect('create');
     }
 
 }

@@ -13,7 +13,14 @@
                     <li class="dropdown-item"><a class="btn">个人中心</a></li>
                     <li class="dropdown-item"><a class="btn">编辑资料</a></li>
                     <li role="separator" class="divider"></li>
-                    <li class="dropdown-item"><a class="btn btn-danger" href="#">退出</a></li>
+                    <li class="dropdown-item">
+                        <a href="#">
+                            <form action="{:url('/logout')}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
+                            </form>
+                        </a>
+                    </li>
                 </ul>
             </li>
             {else /}

@@ -4,6 +4,8 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Request;
+use app\common\model\Users;
+use think\facade\Session;
 
 class Sessions extends Controller
 {
@@ -25,12 +27,16 @@ class Sessions extends Controller
      */
     public function createOp()
     {
-        $old = [
-            'email'    => '',
-            'password' => '',
-        ];
+        if (Session::has('old')) {
+            $old = Session::get('old');
+        } else {
+            $old = [
+                'email'    => '',
+                'password' => '',
+            ];
+        }
         $this->assign('old',$old);
-       return $this->fetch();
+        return $this->fetch();
     }
 
     /**
@@ -42,20 +48,24 @@ class Sessions extends Controller
     public function saveOp(Request $request)
     {
         if ($request->isPost()) {
-           $data   = $request->param();
-           $errors = $this->validate($data,'app\index\validate\Sessions');
+            $data   = $request->param();
+            $errors = $this->validate($data,'app\index\validate\Sessions');
             if (($errors !== true) && (is_array($errors))) {
                 $this->assign('errors', $errors);
                 $this->assign('old', $data);
                 return view('create');
             } else {
-//                $user = new UserModel([
-//                    'name'     => $request->param('name'),
-//                    'email'    => $request->param('email'),
-//                    'password' => md5($request->param('password')),
-//                ]);
-//                $user->save();
-//                return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
+                $user = Users::getByEmail($data['email']);
+                if($user['password'] != md5($data['password']))
+                {
+                    Session::flash('danger','很抱歉，您的邮箱和密码不匹配！');
+                    Session::flash('old',$data);
+                    return redirect('create');
+                } else {
+                    
+                    Session::flash('success','欢迎回来！');
+                    return redirect('users/read',[$user->id]);
+                }
             }
         }
     }

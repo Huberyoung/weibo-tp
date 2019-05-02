@@ -24,9 +24,10 @@ class Sessions extends Validate
      * @var array
      */	
     protected $message = [
-        'email.require'   => '邮箱不能为空',
-        'email.max'       => '邮箱不能超过255个字符',
-        'email'           => '邮箱格式错误',
-        'password.min'    => '密码不能少于6位',
+        'email.require'    => '邮箱不能为空',
+        'email.max'        => '邮箱不能超过255个字符',
+        'email'            => '邮箱格式错误',
+        'password.require' => '密码不能为空',
+        'password.min'     => '密码不能少于6位',
     ];
 }

@@ -10,7 +10,7 @@
         </div>
         <div class="panel-body">
             {include file="layouts/_errors" /}
-            <form method="post" action="{:url('save')}">
+            <form action="{:url('users/save')}" method="POST">
                 {:token()}
                 <div class="form-group">
                     <label for="name">名称:</label>

@@ -44,6 +44,7 @@ class Users extends Controller
      */
     public function saveOp(Request $request)
     {
+        $data = $request->param();
         if($request->isPost()) {
             $data = $request->param();
             $errors = $this->validate($data,'app\index\validate\Users');

@@ -3,9 +3,23 @@
         <div class="navbar-header">
             <a href="{:url('home')}" class="navbar-brand">微博App</a>
         </div>
-        <ul class="nav navbar-nav pull-right">
+        <ul class="nav navbar-nav  pull-right">
+            {if (Session::has('user')) }
+            <li class="navbar-item"><a class="navbar-link" href="#">用户列表</a></li>
+            <li class="navbar-item dropdown">
+                <a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown" role="button"><?php echo Session::get('user')['name']?><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-item"><a class="btn">个人中心</a></li>
+                    <li class="dropdown-item"><a class="btn">编辑资料</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-item"><a class="btn btn-danger" href="#">退出</a></li>
+                </ul>
+            </li>
+            {else /}
             <li class="navbar-item"><a class="navbar-link" href="{:url('help')}">帮助</a></li>
             <li class="navbar-item"><a class="navbar-link" href="#">登录</a></li>
+            {/if}
         </ul>
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace app\Index\controller;
 
 use app\common\model\Users as UserModel;
 use think\Controller;
+use think\facade\Session;
 use think\Request;
 
 class Users extends Controller
@@ -59,6 +60,7 @@ class Users extends Controller
                     'password' => md5($request->param('password')),
                 ]);
                 $user->save();
+                Session::set('user',$user);
                 return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
             }
         }

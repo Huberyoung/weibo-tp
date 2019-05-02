@@ -7,15 +7,16 @@
             {if (Session::has('user')) }
             <li class="navbar-item"><a class="navbar-link" href="#">用户列表</a></li>
             <li class="navbar-item dropdown">
-                <a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown" role="button"><?php echo Session::get('user')['name']?><span class="caret"></span></a>
+                <a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown" role="button">{$Request.session.user.name}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li role="separator" class="divider"></li>
-                    <li class="dropdown-item"><a class="btn">个人中心</a></li>
+                    <li class="dropdown-item"><a class="btn" href="{:url('users/read',['id'=>$Request.session.user.id])}">个人中心</a></li>
                     <li class="dropdown-item"><a class="btn">编辑资料</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-item">
                         <a href="#">
                             <form action="{:url('/logout')}" method="POST">
+                                {:token()}
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
                             </form>

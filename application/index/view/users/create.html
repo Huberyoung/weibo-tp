@@ -9,7 +9,7 @@
             <h3>注册</h3>
         </div>
         <div class="panel-body">
-            {include file="layouts/_errors" /}
+            {include file="shared/_errors" /}
             <form action="{:url('users/save')}" method="POST">
                 {:token()}
                 <div class="form-group">

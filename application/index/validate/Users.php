@@ -34,6 +34,8 @@ class Users extends Validate
         'email.unique'    => '邮箱已注册',
         'email'           => '邮箱格式错误',
         'password.min'    => '密码不能少于6位',
+        'password.require'=> '密码不能为空',
+        'password_confirmation.require'=> '确认密码不能为空',
         'password_confirmation.confirm' => '两次密码输入不一致'
     ];
 }

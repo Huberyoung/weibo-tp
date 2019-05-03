@@ -5,7 +5,7 @@
         </div>
         <ul class="nav navbar-nav  pull-right">
             {if (Session::has('user')) }
-            <li class="navbar-item"><a class="navbar-link" href="#">用户列表</a></li>
+            <li class="navbar-item"><a class="navbar-link" href="{:url('users/')}">用户列表</a></li>
             <li class="navbar-item dropdown">
                 <a href="#" class="navbar-link dropdown-toggle" data-toggle="dropdown" role="button">{$Request.session.user.name}<span class="caret"></span></a>
                 <ul class="dropdown-menu">

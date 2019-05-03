@@ -14,7 +14,7 @@ class Users extends Controller
 {
     protected $batchValidate = true;
     protected $middleware = [
-        'Auth' 	=> ['except' 	=> ['create', 'save' ,'read'] ],
+        'Auth' 	=> ['except' 	=> ['create', 'save' ,'read', 'index'] ],
         'Guest' => ['only' 		=> ['create'] ],
     ];
     /**
@@ -24,7 +24,9 @@ class Users extends Controller
      */
     public function indexOp()
     {
-        phpinfo();
+        $users = UserModel::all();
+        $this->assign('users',$users);
+        return $this->fetch();
     }
 
     /**

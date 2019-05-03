@@ -8,14 +8,11 @@
     <h2 class="text-center">所有用户</h2>
     <div class="list-group">
         {volist name="users" id="user"}
-        <div class="list-group-item">
-            <img class="mr-3" src="http://www.gravatar.com/avatar/87fc062d453ef102e6e52bf53d562af2?s=100" alt="{$user->name}" width=32>
-            {$user.id}------
-            <a href="{:url('users/read',['id'=>$user.id])}">
-                {$user->name}
-            </a>
-        </div>
+        {include file='users/_user'}
         {/volist}
+    </div>
+    <div class="text-center">
+        {$users|raw}
     </div>
 </div>
 

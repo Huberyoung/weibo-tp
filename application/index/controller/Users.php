@@ -24,7 +24,7 @@ class Users extends Controller
      */
     public function indexOp()
     {
-        $users = UserModel::all();
+        $users = UserModel::where('id','>',0)->paginate(10);
         $this->assign('users',$users);
         return $this->fetch();
     }

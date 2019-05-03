@@ -11,6 +11,10 @@ use think\facade\Cookie;
 class Sessions extends Controller
 {
     protected $batchValidate = true;
+    protected $middleware = [
+        'Auth' 	=> ['except' 	=> ['create','read','save'] ],
+        'Guest' => ['only'  	=> ['create'] ]
+    ];
     /**
      * 显示资源列表
      *

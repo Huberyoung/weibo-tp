@@ -11,7 +11,8 @@
                 <ul class="dropdown-menu">
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-item"><a class="btn" href="{:url('users/read',['id'=>$Request.session.user.id])}">个人中心</a></li>
-                    <li class="dropdown-item"><a class="btn" href="{:url('users/update',['id'=>$Request.session.user.id])}">编辑资料</a></li>
+                    <li class="dropdown-item"><a class="btn" href="{:url('users/edit',['id'=>$Request.session.user.id])}">编辑资料</a></li>
+
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-item">
                         <a href="#">

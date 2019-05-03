@@ -12,6 +12,10 @@ use think\Request;
 class Users extends Controller
 {
     protected $batchValidate = true;
+    protected $middleware = [
+        'Auth' 	=> ['except' 	=> ['create','read','save'] ],
+        'Guest' => ['only'  	=> ['create'] ]
+    ];
     /**
      * 显示资源列表
      *
@@ -78,7 +82,6 @@ class Users extends Controller
         $user = UserModel::get($id);
 
         $user->gravatar = $this->gravatar($user);
-
         $this->assign('user', $user);
 
         return $this->fetch();
@@ -92,7 +95,9 @@ class Users extends Controller
      */
     public function editOp($id)
     {
-        //
+        $user = UserModel::get($id);
+        $this->assign('old',$user);
+        return $this->fetch();
     }
 
     /**
@@ -104,7 +109,24 @@ class Users extends Controller
      */
     public function updateOp(Request $request, $id)
     {
-        //
+        if($request->isPut()) {
+            $data = $request->param();
+            $errors = $this->validate($data,'app\index\validate\UsersEdit');
+            $user = UserModel::get($id);
+            if((($errors !== true) && (is_array($errors)))){
+                $this->assign('errors',$errors);
+                $this->assign('old',$user);
+                return $this->fetch('edit',['id' => $id]);
+            } else {
+                if (!empty($data['password'])) {
+                    $user->password = md5($data['password']);
+                }
+                $user->name = $data['name'];
+                $user->save();
+                Session::set('user',$user);
+                return redirect('users/read',[$user->id])->with('success','个人资料更新成功！');
+            }
+        }
     }
 
     /**

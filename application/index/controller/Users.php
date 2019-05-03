@@ -84,7 +84,6 @@ class Users extends Controller
     {
         $user = UserModel::get($id);
 
-        $user->gravatar = $this->gravatar($user);
         $this->assign('user', $user);
 
         return $this->fetch();
@@ -148,20 +147,20 @@ class Users extends Controller
      */
     public function deleteOp($id)
     {
-        //
-    }
-
-    public function gravatar($user, $size = '100')
-    {
-        $hash = md5(strtolower(trim($user->email)));
-        return "http://www.gravatar.com/avatar/$hash?s=$size";
+       if ($this->checkIsAdmin($id)){
+           UserModel::destroy($id);
+           Session::flash('success','成功删除用户！');
+           return Redirect($_SERVER["HTTP_REFERER"]);
+       }
     }
 
     public function check($current_id)
     {
-        if ($current_id == Session::get('user')->id) {
-            return true;
-        }
-        return false;
+        return ($current_id == Session::get('user')->id);
+    }
+
+    public function checkIsAdmin($current_id)
+    {
+        return (($current_id != Session::get('user')->id) && (Session::get('user')->is_admin == 1));
     }
 }

@@ -1,7 +1,20 @@
-<div class="list-group-item">
-    <img class="mr-3" src="http://www.gravatar.com/avatar/87fc062d453ef102e6e52bf53d562af2?s=100" alt="{$user->name}" width=32>
-    {$user.id}------
-    <a href="{:url('users/read',['id'=>$user.id])}">
-        {$user->name}
-    </a>
-</div>
+<tr>
+    <td>
+        {$user.id}
+    </td>
+    <td>
+        <a href="{:url('users/read',['id'=>$user.id])}">
+            {$user->name}
+        </a>
+    </td>
+    <td>
+        {if (($user.id != Session::get('user')->id) && (Session::get('user')->is_admin == 1))}
+        <form action="{:url('users/delete',['id'=>$user.id])}" method="post" class="float-right">
+            {:token()}
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-sm btn-danger delete-btn">删除</button>
+        </form>
+        {/if}
+    </td>
+
+</tr>

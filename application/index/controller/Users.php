@@ -12,6 +12,10 @@ use think\Request;
 class Users extends Controller
 {
     protected $batchValidate = true;
+    protected $middleware = [
+        'Auth' 	=> ['except' 	=> ['create','read','save'] ],
+        'Guest' => ['only'  	=> ['create'] ]
+    ];
     /**
      * 显示资源列表
      *
@@ -78,7 +82,6 @@ class Users extends Controller
         $user = UserModel::get($id);
 
         $user->gravatar = $this->gravatar($user);
-
         $this->assign('user', $user);
 
         return $this->fetch();

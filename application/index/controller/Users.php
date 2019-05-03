@@ -7,14 +7,15 @@ use think\Controller;
 use think\facade\Session;
 use think\facade\Cookie;
 use think\Request;
+use think\response\Redirect;
 
 
 class Users extends Controller
 {
     protected $batchValidate = true;
     protected $middleware = [
-        'Auth' 	=> ['except' 	=> ['create','read','save'] ],
-        'Guest' => ['only'  	=> ['create'] ]
+        'Auth' 	=> ['except' 	=> ['create', 'save' ,'read'] ],
+        'Guest' => ['only' 		=> ['create'] ],
     ];
     /**
      * 显示资源列表
@@ -95,9 +96,13 @@ class Users extends Controller
      */
     public function editOp($id)
     {
-        $user = UserModel::get($id);
-        $this->assign('old',$user);
-        return $this->fetch();
+        if ($this->check($id)){
+            $user = UserModel::get($id);
+            $this->assign('old',$user);
+            return $this->fetch();
+        } else {
+            $this->error('很抱歉，您没有操作权限！');
+        }
     }
 
     /**
@@ -110,21 +115,25 @@ class Users extends Controller
     public function updateOp(Request $request, $id)
     {
         if($request->isPut()) {
-            $data = $request->param();
-            $errors = $this->validate($data,'app\index\validate\UsersEdit');
-            $user = UserModel::get($id);
-            if((($errors !== true) && (is_array($errors)))){
-                $this->assign('errors',$errors);
-                $this->assign('old',$user);
-                return $this->fetch('edit',['id' => $id]);
-            } else {
-                if (!empty($data['password'])) {
-                    $user->password = md5($data['password']);
+            if ($this->check($id)) {
+                $data = $request->param();
+                $errors = $this->validate($data,'app\index\validate\UsersEdit');
+                $user = UserModel::get($id);
+                if((($errors !== true) && (is_array($errors)))){
+                    $this->assign('errors',$errors);
+                    $this->assign('old',$user);
+                    return $this->fetch('edit',['id' => $id]);
+                } else {
+                    if (!empty($data['password'])) {
+                        $user->password = md5($data['password']);
+                    }
+                    $user->name = $data['name'];
+                    $user->save();
+                    Session::set('user',$user);
+                    return redirect('users/read',[$user->id])->with('success','个人资料更新成功！');
                 }
-                $user->name = $data['name'];
-                $user->save();
-                Session::set('user',$user);
-                return redirect('users/read',[$user->id])->with('success','个人资料更新成功！');
+            } else {
+                $this->error('很抱歉，您没有操作权限！');
             }
         }
     }
@@ -144,5 +153,13 @@ class Users extends Controller
     {
         $hash = md5(strtolower(trim($user->email)));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
+
+    public function check($current_id)
+    {
+        if ($current_id == Session::get('user')->id) {
+            return true;
+        }
+        return false;
     }
 }

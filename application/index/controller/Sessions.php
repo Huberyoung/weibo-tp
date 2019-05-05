@@ -69,9 +69,15 @@ class Sessions extends Controller
                     if (!empty($data['remember'])){
                         $this->rememberMe($user);
                     }
-                    Session::set('user',$user);
-                    Session::flash('success','欢迎回来！');
-                    return redirect('users/read',[$user->id]);
+                    if ($user['activated']) {
+                        Session::set('user',$user);
+                        Session::flash('success','欢迎回来！');
+                        return redirect('users/read',[$user->id]);
+                    } else {
+                        Session::flash('warning','你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                        return redirect('/');
+                    }
+
                 }
             }
         }

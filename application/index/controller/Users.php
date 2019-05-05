@@ -14,7 +14,7 @@ class Users extends Controller
 {
     protected $batchValidate = true;
     protected $middleware = [
-        'Auth' 	=> ['except' 	=> ['create', 'save' ,'read', 'index'] ],
+        'Auth' 	=> ['except' 	=> ['create', 'save' ,'read', 'index', 'confirm'] ],
         'Guest' => ['only' 		=> ['create'] ],
     ];
     /**
@@ -57,19 +57,22 @@ class Users extends Controller
         if($request->isPost()) {
             $data = $request->param();
             $errors = $this->validate($data,'app\index\validate\Users');
-            if(($errors !== true) && (is_array($errors))){
+            if ($errors == true) {
+                $activation_token = md5($request->param('email').$request->param('name'));
+                $user = new UserModel([
+                    'name'             => $request->param('name'),
+                    'email'            => $request->param('email'),
+                    'password'         => md5($request->param('password')),
+                    'activation_token' => $activation_token,
+                ]);
+                $user->save();
+                $this->sendEmailConfirmationTo($user);
+                Session::flash('success','验证邮件已发送到你的注册邮箱上，请注意查收。');
+                return redirect('/');
+            } else {
                 $this->assign('errors',$errors);
                 $this->assign('old',$data);
                 return view('create');
-            } else {
-                $user = new UserModel([
-                    'name'     => $request->param('name'),
-                    'email'    => $request->param('email'),
-                    'password' => md5($request->param('password')),
-                ]);
-                $user->save();
-                Session::set('user',$user);
-                return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
             }
         }
     }
@@ -152,6 +155,29 @@ class Users extends Controller
            Session::flash('success','成功删除用户！');
            return Redirect($_SERVER["HTTP_REFERER"]);
        }
+    }
+
+    public function sendEmailConfirmationTo($user)
+    {
+        $to      = $user->email;
+        $title   = '感谢注册 Weibo 应用！请确认你的邮箱.';
+        $url = 'http://www.weibo.test'.url('signup/confirm/',[$user->activation_token]);
+        $content = "<h1>感谢您在 Weibo App 网站进行注册！</h1><p>请点击下面的链接完成注册：<a href=".$url.">".$url."</a></p><p>如果这不是您本人的操作，请忽略此邮件。</p>";
+        $result = sendMail($to,$title,$content);
+        return $result;
+    }
+
+    public function confirmOp($token)
+    {
+        if (!empty($token)) {
+            $user = UserModel::where('activation_token', $token)->find();
+            $user->activated = true;
+            $user->activation_token = null;
+            $user->save();
+            Session::set('user',$user);
+            return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
+        }
+        return redirect('/')->with('warning','您的token无效');
     }
 
     public function check($current_id)

@@ -14,6 +14,7 @@ Route::group('/', function () {
     Route::get('about', 'about');
 })->prefix('index/staticPages/');
 
+
 Route::resource('users','index/users');
 
 Route::group('/', function (){
@@ -21,3 +22,5 @@ Route::group('/', function (){
     Route::post('save','save');
     Route::delete('logout','delete');
 })->prefix('index/Sessions/');
+
+Route::get('signup/confirm/:token','index/Users/confirm');

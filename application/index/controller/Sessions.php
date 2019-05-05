@@ -12,7 +12,6 @@ class Sessions extends Controller
 {
     protected $batchValidate = true;
     protected $middleware = [
-        'Auth' 	=> ['except' 	=> ['create', 'save' ,'read'] ],
         'Guest' => ['only' 		=> ['create'] ],
     ];
     /**

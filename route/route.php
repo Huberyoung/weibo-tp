@@ -24,3 +24,11 @@ Route::group('/', function (){
 })->prefix('index/Sessions/');
 
 Route::get('signup/confirm/:token','index/Users/confirm');
+
+
+Route::group('password/',function (){
+    Route::get('request','showLinkRequestForm');
+    Route::post('email','sendResetLinkEmail');
+    Route::get('reset/:token','showResetForm');
+    Route::post('update','reset');
+})->prefix('index/ForgotPassword/');

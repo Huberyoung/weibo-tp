@@ -175,7 +175,7 @@ class Users extends Controller
             $user->activation_token = null;
             $user->save();
             Session::set('user',$user);
-            return redirect('users/read',[$user->id])->with('success','欢迎，您将在这里开启一段新的旅程~');
+            return redirect('users/read',[$user->id])->with('success','恭喜你，激活成功！');
         }
         return redirect('/')->with('warning','您的token无效');
     }

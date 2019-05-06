@@ -25,7 +25,6 @@ Route::group('/', function (){
 
 Route::get('signup/confirm/:token','index/Users/confirm');
 
-
 Route::group('password/',function (){
     Route::get('request','showLinkRequestForm');
     Route::post('email','sendResetLinkEmail');

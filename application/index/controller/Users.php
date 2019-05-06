@@ -57,7 +57,7 @@ class Users extends Controller
         if($request->isPost()) {
             $data = $request->param();
             $errors = $this->validate($data,'app\index\validate\Users');
-            if ($errors == true) {
+            if ($errors === true) {
                 $activation_token = md5($request->param('email').$request->param('name'));
                 $user = new UserModel([
                     'name'             => $request->param('name'),

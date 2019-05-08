@@ -38,7 +38,6 @@ class CreateUsersTable extends Migrator
             ->addColumn('create_at', 'datetime',array('comment'=>'创建时间'))
             ->addColumn('update_at', 'datetime',array('comment'=>'更新时间'))
             ->addIndex(array('email'), array('unique' => true))
-            ->setId('id')
             ->create();
     }
 

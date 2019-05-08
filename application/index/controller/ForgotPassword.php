@@ -82,7 +82,7 @@ class ForgotPassword extends Controller
     {
         $to      = $password->email;
         $title   = '感谢您使用 Weibo App 网站！请确认你的邮箱.';
-        $url = 'http://www.weibo.test'.url('password/reset/',[$password->token]);
+        $url = 'http://'.$_SERVER['SERVER_NAME'].url('password/reset/',[$password->token]);
         $content = "<h1>感谢您使用 Weibo App 网站！</h1><p>请点击下面的链接进行密码重置：<a href=".$url.">".$url."</a></p><p>如果这不是您本人的操作，请忽略此邮件。</p>";
         $result = sendMail($to,$title,$content);
         return $result;

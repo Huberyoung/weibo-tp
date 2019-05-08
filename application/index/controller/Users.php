@@ -161,7 +161,7 @@ class Users extends Controller
     {
         $to      = $user->email;
         $title   = '感谢注册 Weibo 应用！请确认你的邮箱.';
-        $url = 'http://www.weibo.test'.url('signup/confirm/',[$user->activation_token]);
+        $url = 'http://'.$_SERVER['SERVER_NAME'].url('signup/confirm/',[$user->activation_token]);
         $content = "<h1>感谢您在 Weibo App 网站进行注册！</h1><p>请点击下面的链接完成注册：<a href=".$url.">".$url."</a></p><p>如果这不是您本人的操作，请忽略此邮件。</p>";
         $result = sendMail($to,$title,$content);
         return $result;

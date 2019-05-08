@@ -3,7 +3,7 @@
 use think\migration\Migrator;
 use think\migration\db\Column;
 
-class CreatePasswordResetsTable extends Migrator
+class CreateStatusesTable extends Migrator
 {
     /**
      * Change Method.
@@ -28,22 +28,19 @@ class CreatePasswordResetsTable extends Migrator
      */
     public function up()
     {
-        $table = $this->table('password_resets');
-        $table
-            ->addColumn('email', 'string',array('comment'=>'用户邮箱'))
-            ->addColumn('token', 'string',array('limit' => 15,'comment'=>'用户名，登陆使用'))
-            ->addColumn('created_at', 'datetime',array('null'=>true,'comment'=>'更新时间'))
-            ->addIndex(array('email'))
-            ->create();
-    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
+        $table = $this->table('statuses');
+        $table->addColumn('content','text',['comment'=>'微博内容']);
+        $table->addColumn('user_id','integer',['comment'=>'用户id']);
+        $table->addTimestamps('created_at','updated_at');
+        $table->addIndex(['user_id','created_at']);
+        $table->create();
+
+
+    }
     public function down()
     {
-        $this->dropTable('password_resets');
+        $this->dropTable('statuses');
     }
 }

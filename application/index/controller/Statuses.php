@@ -5,10 +5,12 @@ namespace app\index\controller;
 use app\common\model\Users as UserModel;
 use think\Controller;
 use think\facade\Session;
+use think\facade\Validate;
 use think\Request;
 
-class statuses extends Controller
+class Statuses extends Controller
 {
+    protected $batchValidate = true;
     /**
      * 保存新建的资源
      *
@@ -17,30 +19,23 @@ class statuses extends Controller
      */
     public function saveOp(Request $request)
     {
-        $rule = [
-            'content'  => 'require|max:140',
-        ];
-
-        $msg = [
-            'content.require' => '内容不能为空',
-            'content.max'     => '内容最多不能超过140个字符',
-        ];
-        $validate   = Validate::make($rule,$msg);
-
-        if($request->isPut()) {
+        $user = Session::get('user');
+        if($request->isPost()) {
             $data   = $request->param();
-            $errors = $validate->check($data);
+            $errors = $this->validate($data,'app\index\validate\Content');
             if((($errors !== true) && (is_array($errors)))){
-//                $this->assign('errors',$errors);
-//                $this->assign('old',$user);
-//                return $this->fetch('edit',['id' => $id]);
+                $this->assign('errors',$errors);
             } else {
                 $user   = Session::get('user');
-                $user->statuses()->content = $data['content'];
-                $user->statuses()->save();
+                $user->statuses()->save([
+                    'content'  => $data['content']
+                ]);
+                $data = ['content'=>''];
                 Session::flash('success','发布成功！');
-                return redirect()->back();
             }
+            $this->assign('old',$data);
+            $this->assign('user',$user);
+            return $this->fetch('/static_pages/home');
         }
     }
 

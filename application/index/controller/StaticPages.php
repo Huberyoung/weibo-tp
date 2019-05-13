@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Request;
+use think\facade\Session;
 
 class StaticPages extends Controller
 {
@@ -14,6 +15,12 @@ class StaticPages extends Controller
      */
     public function homeOp()
     {
+        if (Session::has('user')) {
+            $user = Session::get('user');
+            $this->assign('user',$user);
+        }
+        $old = ['content'=>''];
+        $this->assign('old',$old);
         return $this->fetch();
     }
 

@@ -1,0 +1,9 @@
+<form action="{:url('/statuses')}" method="POST">
+    {include file="shared/_errors" /}
+    {:token()}
+    <textarea class="form-control" rows="8" placeholder="聊聊新鲜事儿..." name="content">{$old.content}</textarea>
+    <br>
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary col-md-3">发布</button>
+    </div>
+</form>

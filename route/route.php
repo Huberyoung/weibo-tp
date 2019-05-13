@@ -32,4 +32,6 @@ Route::group('password/',function (){
     Route::post('update','reset');
 })->prefix('index/ForgotPassword/');
 
-Route::resource('statuses','index/statuses')->only(['save','delete']);
+Route::group('statuses',function (){
+    Route::post('/','save');
+})->prefix('index/Statuses/');

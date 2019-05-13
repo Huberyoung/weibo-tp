@@ -1,9 +1,34 @@
 {extend name="layouts/default" /}
 {block name="title"}主页{/block}
 {block name="body"}
+{if (Session::has('user')) }
+<div class="row">
+    <div class="col-md-8">
+        <section class="status_form">
+            {include file="shared/_status_form" /}
+        </section>
+    </div>
+    <aside class="col-md-4">
+        <section class="user_info">
+            <div class="col-md-12">
+                <div class="col-md-offset-2 col-md-8">
+                    <a href="{:url('/users/'.$user->id)}">
+                        <img src="http://www.gravatar.com/avatar/87fc062d453ef102e6e52bf53d562af2?s=100" alt="{$user->name}" class="gravatar img-circle img-responsive center-block"/>
+                    </a>
+                </div>
+                <div class="col-md-offset-2 col-md-8 text-center">
+                    <h1>{$user->name}</h1>
+                </div>
+            </div>
+        </section>
+    </aside>
+</div>
+<br>
+{else}
 <div class="jumbotron">
     <h1>我爱你呀，陈雅婷</h1>
     <p>从今天开始就要学习应用啦，开心不开心呢</p>
     <p><a href="{:url('users/create')}" class="btn btn-success btn-lg" role="button">现在就注册</a></p>
 </div>
+{/if}
 {/block}

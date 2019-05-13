@@ -31,3 +31,5 @@ Route::group('password/',function (){
     Route::get('reset/:token','showResetForm');
     Route::post('update','reset');
 })->prefix('index/ForgotPassword/');
+
+Route::resource('statuses','index/statuses')->only(['save','delete']);

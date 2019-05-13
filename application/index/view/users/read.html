@@ -24,6 +24,7 @@
             {volist name='statuses' id='status'}
                 {include file="statuses/_status" /}
             {/volist}
+            <li class="text-center"> {$statuses|raw}</li>
         </ul>
         {else}
         <p>没有数据!</p>

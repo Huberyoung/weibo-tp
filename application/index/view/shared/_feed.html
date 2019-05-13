@@ -1,0 +1,12 @@
+{if ($feed_items->count() > 0) }
+<ul class="list-unstyled">
+    {foreach $feed_items as $key=>$status }
+    {include file="statuses/_status" /}
+    {/foreach}
+</ul>
+<div class="col-md-5">
+    {$feed_items|raw}
+</div>
+{else}
+<p>没有数据！</p>
+{/if}

@@ -16,7 +16,9 @@ class StaticPages extends Controller
     public function homeOp()
     {
         if (Session::has('user')) {
-            $user = Session::get('user');
+            $user       = Session::get('user');
+            $feed_items = $user->feed()->paginate(10);
+            $this->assign('feed_items',$feed_items);
             $this->assign('user',$user);
         }
         $old = ['content'=>''];

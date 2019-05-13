@@ -14,4 +14,10 @@ class Users extends Model
     {
         return $this->hasMany('Statuses','user_id');
     }
+
+    public function feed()
+    {
+        return $this->statuses()
+            ->order('created_at','desc');
+    }
 }

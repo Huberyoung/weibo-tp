@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use think\Model;
 
-class Status extends Model
+class Statuses extends Model
 {
     protected $autoWriteTimestamp = 'datetime';
     protected $createTime = 'create_at';

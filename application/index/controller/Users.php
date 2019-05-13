@@ -76,7 +76,6 @@ class Users extends Controller
             }
         }
     }
-
     /**
      * 显示指定的资源
      *
@@ -87,6 +86,10 @@ class Users extends Controller
     {
         $user = UserModel::get($id);
 
+        $statuses = $user->statuses()
+            ->order('created_at','desc')
+            ->select();
+        $this->assign('statuses', $statuses);
         $this->assign('user', $user);
 
         return $this->fetch();

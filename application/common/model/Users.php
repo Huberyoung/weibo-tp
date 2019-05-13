@@ -12,6 +12,6 @@ class Users extends Model
 
     public function statuses()
     {
-        return $this->hasMany('Status');
+        return $this->hasMany('Statuses','user_id');
     }
 }

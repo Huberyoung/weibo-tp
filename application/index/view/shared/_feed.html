@@ -1,4 +1,4 @@
-{if ($feed_items->count() > 0) }
+{if @(!empty($feed_items)) }
 <ul class="list-unstyled">
     {foreach $feed_items as $key=>$status }
     {include file="statuses/_status" /}

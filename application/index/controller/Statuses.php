@@ -25,17 +25,17 @@ class Statuses extends Controller
             $errors = $this->validate($data,'app\index\validate\Content');
             if((($errors !== true) && (is_array($errors)))){
                 $this->assign('errors',$errors);
+                $this->assign('old',$data);
+                $this->assign('user',$user);
+                return $this->fetch('/static_pages/home');
             } else {
-                $user   = Session::get('user');
                 $user->statuses()->save([
                     'content'  => $data['content']
                 ]);
-                $data = ['content'=>''];
                 Session::flash('success','发布成功！');
+                return redirect('/');
             }
-            $this->assign('old',$data);
-            $this->assign('user',$user);
-            return $this->fetch('/static_pages/home');
+
         }
     }
 

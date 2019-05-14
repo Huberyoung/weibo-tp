@@ -3,6 +3,7 @@
 {block name='title'}注册{/block}
 
 {block name='body'}
+
 <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
     <div class="panel panel-default panel-collapse">
         <div class="panel-heading">
@@ -12,7 +13,7 @@
             {include file="shared/_errors" /}
             <div class="gravatar_edit" >
                 <a href="http://gravatar.com/emails" target="_blank">
-                    <img src="http://www.gravatar.com/avatar/87fc062d453ef102e6e52bf53d562af2?s=100" alt="{ $old->name }" class="gravatar img-circle"/>
+                    <img src="<?php echo $old->gravatar()?>" alt="{ $old->name }" class="gravatar img-circle"/>
                 </a>
             </div>
             <form action="{:url('users/update',['id'=>$old->id])}" method="POST">

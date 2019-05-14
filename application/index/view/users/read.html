@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="col-md-offset-2 col-md-8">
                     <a href="{:url('/users/'.$user->id)}">
-                        <img src="http://www.gravatar.com/avatar/87fc062d453ef102e6e52bf53d562af2?s=100" alt="{$user->name}" class="gravatar img-circle img-responsive center-block"/>
+                        <img src="<?php echo $user->gravatar();?>" alt="{$user->name}" class="gravatar img-circle img-responsive center-block"/>
                     </a>
                 </div>
                 <div class="col-md-offset-2 col-md-8 text-center">

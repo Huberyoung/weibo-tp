@@ -1,7 +1,7 @@
 <li class="media">
     <div class="media-left">
         <a href="{:url('/users/'.$user->id)}">
-            <img src="http://www.gravatar.com/avatar/87fc062d453ef102e6e52bf53d562af2?s=100" alt="{$user->name}" class="gravatar img-circle" style="height: 50px;width: 50px;"/>
+            <img src="<?php echo $user->gravatar()?>" alt="{$user->name}" class="gravatar img-circle" style="height: 50px;width: 50px;"/>
         </a>
     </div>
     <div class="media-body">

@@ -20,4 +20,10 @@ class Users extends Model
         return $this->statuses()
             ->order('created_at','desc');
     }
+
+    public function gravatar($size = '100')
+    {
+        $hash = md5(strtolower(trim($this->email)));
+        return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
 }

@@ -89,7 +89,6 @@ class Users extends Controller
         $statuses = $user->statuses()
             ->order('created_at','desc')
             ->paginate(10);
-
         $this->assign('statuses', $statuses);
         $this->assign('user', $user);
 

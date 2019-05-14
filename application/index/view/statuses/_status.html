@@ -8,4 +8,15 @@
         <h5 class="media-heading">{$user->name}<small>/{$status->created_at}</small></h5>
         {$status->content}
     </div>
+
+    <div class="media-right">
+        {if (($status->user_id === Session::get('user')->id) || (Session::get('user')->is_admin == 1))}
+        <form action="{:url('/statuses/',['id'=>$status.id])}" method="post" class="float-right" onsubmit="return confirm('您确定要删除本条微博吗？'); ">
+            {:token()}
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-sm btn-danger delete-btn">删除</button>
+        </form>
+        {/if}
+    </div>
+
 </li>

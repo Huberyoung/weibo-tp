@@ -34,4 +34,5 @@ Route::group('password/',function (){
 
 Route::group('statuses',function (){
     Route::post('/','save');
+    Route::delete('/:id','delete');
 })->prefix('index/Statuses/');

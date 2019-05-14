@@ -3,9 +3,9 @@
 namespace app\index\controller;
 
 use app\common\model\Users as UserModel;
+use app\common\model\Statuses as StatusModel;
 use think\Controller;
 use think\facade\Session;
-use think\facade\Validate;
 use think\Request;
 
 class Statuses extends Controller
@@ -81,6 +81,18 @@ class Statuses extends Controller
      */
     public function deleteOp($id)
     {
-        //
+        $status =  StatusModel::get($id);
+        if ($this->checkAuth($status->user_id)){
+            $status ->delete();
+            Session::flash('success','微博已被成功删除！');
+        } else {
+            Session::flash('warning','对不起，您没有操作权限！');
+        }
+        return Redirect($_SERVER["HTTP_REFERER"]);
+    }
+
+    public function checkAuth($current_id)
+    {
+        return ($current_id === Session::get('user')->id) || (Session::get('user')->is_admin == 1);
     }
 }

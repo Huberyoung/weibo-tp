@@ -8,7 +8,7 @@ use think\Controller;
 use think\facade\Session;
 use think\Request;
 
-class Statuses extends Controller
+class  Statuses extends Controller
 {
     protected $batchValidate = true;
     /**

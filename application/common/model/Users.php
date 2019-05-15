@@ -26,4 +26,29 @@ class Users extends Model
         $hash = md5(strtolower(trim($this->email)));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany('Users','followers','user_id','follower_id');
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany('Users','followers','follower_id','user_id');
+    }
+
+    public function follow($user_ids)
+    {
+        $this->followings()->attach($user_ids);
+    }
+
+    public function unFollow($user_ids)
+    {
+        $this->followings()->detach($user_ids);
+    }
+
+    public function isFollowing($user_id)
+    {
+        return in_array($user_id,$this->followings());
+    }
 }

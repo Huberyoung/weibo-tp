@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use think\Model;
+use app\common\model\Followers;
 
 class Users extends Model
 {
@@ -49,6 +50,7 @@ class Users extends Model
 
     public function isFollowing($user_id)
     {
-        return in_array($user_id,$this->followings());
+        $followers = Followers::where(['user_id'=>$user_id,'follower_id'=>$this->id])->findOrEmpty();
+        return empty($followers);
     }
 }

@@ -23,8 +23,6 @@ Route::group('/', function (){
     Route::delete('logout','delete');
 })->prefix('index/Sessions/');
 
-Route::get('signup/confirm/:token','index/Users/confirm');
-
 Route::group('password/',function (){
     Route::get('request','showLinkRequestForm');
     Route::post('email','sendResetLinkEmail');
@@ -36,3 +34,9 @@ Route::group('statuses',function (){
     Route::post('/','save');
     Route::delete('/:id','delete');
 })->prefix('index/Statuses/');
+
+Route::get('signup/confirm/:token','index/Users/confirm');
+
+Route::get('users/:id/followers','index/Users/followers');
+
+//Route::get('users/:id/followings','index/Users/followings');

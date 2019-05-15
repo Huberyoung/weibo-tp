@@ -1,0 +1,20 @@
+{extend name='layouts/default'}
+
+{block name='title'}{$title}{/block}
+
+{block name='body'}
+<div class="list-group list-group-flush col-md-offset-2 col-md-8">
+    {foreach $users as $key=>$user }
+    <div class="list-group-item">
+        <img class="" src={$user->gravatar()}" alt="{$user.name}" width=32>
+        <a href="{:url('users/read',['id'=>$user.id])}">
+            {$user->name}
+        </a>
+    </div>
+    {/foreach}
+</div>
+<div class="col-md-offset-3 col-md-6">
+    {$users|raw}
+</div>
+</div>
+{/block}

@@ -1,16 +1,16 @@
-<a href="#">
+<a href="{:url('users/read',['id'=>$Request.session.user.id])}">
     <strong id="statuses" class="stat">
         {$user->statuses()->count()}
     </strong>
     微博
 </a>
-<a href="#">
+<a href="{:url('users/followers',['id'=>$Request.session.user.id])}">
     <strong id="followers" class="stat">
         {$user->followers()->count()}
     </strong>
     粉丝
 </a>
-<a href="#" >
+<a href="{:url('users/followings',['id'=>$Request.session.user.id])}" >
     <strong id="following" class="stat">
         {$user->followings()->count()}
     </strong>

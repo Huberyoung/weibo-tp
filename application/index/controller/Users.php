@@ -183,6 +183,28 @@ class Users extends Controller
         return redirect('/')->with('warning','您的token无效');
     }
 
+    public function followingsOp($id)
+    {
+        $user = UserModel::get($id);
+        $users = $user->followings()->paginate(30);
+        $title = $user->name . '关注的人';
+        $this->assign('users', $users);
+        $this->assign('title', $title);
+
+        return $this->fetch('users/show_follow');
+    }
+
+    public function followersOp($id)
+    {
+        $user = UserModel::get($id);
+        $users = $user->followers()->paginate(30);
+        $title = $user->name . '关注的人';
+        $this->assign('users', $users);
+        $this->assign('title', $title);
+
+        return $this->fetch('users/show_follow');
+    }
+
     public function check($current_id)
     {
         return ($current_id == Session::get('user')->id);
@@ -192,4 +214,5 @@ class Users extends Controller
     {
         return (($current_id != Session::get('user')->id) && (Session::get('user')->is_admin == 1));
     }
+
 }

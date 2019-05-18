@@ -4,6 +4,7 @@
             <img src="<?php echo $user->gravatar()?>" alt="{$user->name}" class="gravatar img-circle" style="height: 50px;width: 50px;"/>
         </a>
     </div>
+    
     <div class="media-body">
         <h5 class="media-heading">{$user->name}<small>/{$status->created_at}</small></h5>
         {$status->content}
@@ -18,5 +19,4 @@
         </form>
         {/if}
     </div>
-
 </li>

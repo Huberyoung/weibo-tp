@@ -18,8 +18,11 @@ class Users extends Model
 
     public function feed()
     {
-        return $this->statuses()
-            ->order('created_at','desc');
+        $user_ids =  Followers::where(['user_id'=>$this->id])->column('follower_id');
+        array_push($user_ids,$this->id);
+        $statuses = Statuses::where('user_id','in',$user_ids)->order('created_at','desc');
+
+        return $statuses;
     }
 
     public function gravatar($size = '100')

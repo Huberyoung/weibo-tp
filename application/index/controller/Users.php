@@ -215,4 +215,9 @@ class Users extends Controller
         return (($current_id != Session::get('user')->id) && (Session::get('user')->is_admin == 1));
     }
 
+    public function follow($current_id, $user_id)
+    {
+        return $current_id !== $user_id;
+    }
+
 }

@@ -14,6 +14,8 @@ Route::group('/', function () {
     Route::get('about', 'about');
 })->prefix('index/staticPages/');
 
+//Route::post('users/followers/:id','index/Followers/save');
+//Route::delete('users/followings/:id','index/Followers/delete');
 
 Route::resource('users','index/users');
 
@@ -37,6 +39,10 @@ Route::group('statuses',function (){
 
 Route::get('signup/confirm/:token','index/Users/confirm');
 
-Route::get('users/:id/followers','index/Users/followers');
+Route::group('users',function (){
+    Route::get('followers','followers');
+    Route::get('followings','followings');
+})->prefix('index/Users/');
 
-//Route::get('users/:id/followings','index/Users/followings');
+
+

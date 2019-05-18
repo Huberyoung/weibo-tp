@@ -1,0 +1,16 @@
+{if ($user->id !== Session('user')->id)}
+<div class="text-center col-md-offset-2 col-md-8">
+    {if (Session('user')->isFollowing($user->id))}
+    <form action="{:url('index/Followers/delete',['id'=>$user->id])}" method="post">
+        {:token()}
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-primary">取消关注</button>
+    </form>
+    {else}
+    <form action="{:url('index/Followers/save',['id'=>$user->id])}" method="post">
+        {:token()}
+        <button type="submit" class="btn btn-primary">关注</button>
+    </form>
+    {/if}
+</div>
+{/if}
